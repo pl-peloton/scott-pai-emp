@@ -17,14 +17,17 @@ package com.example.android.testing.espresso.RecyclerViewSample
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Shows a list using a RecyclerView.
  */
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +43,21 @@ class MainActivity : Activity() {
         val adapter = CustomAdapter(dataSet, applicationContext)
         recyclerView.adapter = adapter
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.action_settings -> {
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
 
     companion object {
         private const val DATASET_COUNT = 50
