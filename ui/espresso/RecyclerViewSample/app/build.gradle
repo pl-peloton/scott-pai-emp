@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 /*
  * Copyright 2016, The Android Open Source Project
  *
@@ -16,11 +18,15 @@
 
 apply plugin: 'com.android.application'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion 33
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
-        applicationId "com.example.android.testing.espresso.RecyclerViewSample"
+        applicationId "com.example.android.testing.espresso.recyclerviewsample"
         minSdkVersion 14
         targetSdkVersion 33
         versionCode 1
@@ -28,7 +34,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-	multiDexEnabled true
+        multiDexEnabled true
     }
     compileOptions {
         sourceCompatibility 1.8
@@ -45,7 +51,7 @@ android {
         managedDevices {
             devices {
                 // run with ../gradlew  nexusOneApi30DebugAndroidTest
-                nexusOneApi30(com.android.build.api.dsl.ManagedVirtualDevice) {
+                nexusOneApi30(ManagedVirtualDevice) {
                     // A lower resolution device is used here for better emulator performance
                     device = "Nexus One"
                     apiLevel = 30
@@ -57,11 +63,18 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
 dependencies {
     // App dependencies
     implementation 'androidx.annotation:annotation:' + rootProject.androidxAnnotationVersion;
     implementation 'androidx.recyclerview:recyclerview:' + rootProject.androidxRecyclerVersion;
     implementation 'androidx.multidex:multidex:2.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     // Testing-only dependencies
     androidTestImplementation 'androidx.test:core:' + rootProject.coreVersion;
