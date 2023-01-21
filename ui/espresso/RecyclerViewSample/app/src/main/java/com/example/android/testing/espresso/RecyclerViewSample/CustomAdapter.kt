@@ -16,10 +16,12 @@
 package com.example.android.testing.espresso.RecyclerViewSample
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -55,13 +57,19 @@ class CustomAdapter(private val mDataSet: List<String>, private val mContext: Co
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        if (position == mDataSet.size / 2 /* calculate middle element position */) {
-            viewHolder.isInTheMiddle = true
-            viewHolder.textView.text = mContext.resources.getString(R.string.middle)
+        val subMiddleRow = PreferenceManager
+            .getDefaultSharedPreferences(mContext)
+            .getBoolean("settings_middle_row", false)
+
+        viewHolder.isInTheMiddle = position == mDataSet.size / 2
+
+        viewHolder.textView.text = if (viewHolder.isInTheMiddle && subMiddleRow) {
+            mContext.resources.getString(R.string.middle)
         } else {
-            viewHolder.isInTheMiddle = false
-            viewHolder.textView.text = mDataSet[position]
+            mDataSet[position]
         }
+
+        Log.d("Adapter", "Viewholder text for $position set to ${viewHolder.textView.text}")
     }
 
     // Return the size of your data set (invoked by the layout manager)

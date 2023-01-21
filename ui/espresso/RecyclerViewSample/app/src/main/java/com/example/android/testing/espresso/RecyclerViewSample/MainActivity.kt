@@ -17,10 +17,12 @@ package com.example.android.testing.espresso.RecyclerViewSample
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -29,23 +31,16 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class MainActivity : AppCompatActivity() {
 
-    lateinit var mainRecyclerItemText: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        loadRecycler()
+    }
 
-        // Create a RecyclerView, a LayoutManager, a data Adapter and wire everything up.
-        val recyclerView = findViewById<View>(R.id.main_recycler) as RecyclerView
-        val layoutManager = LinearLayoutManager(applicationContext)
-        recyclerView.layoutManager = layoutManager
-        val dataSet: MutableList<String> = ArrayList(DATASET_COUNT)
-        mainRecyclerItemText = getString(R.string.item_element_text)
-        for (i in 0 until DATASET_COUNT) {
-            dataSet.add("$mainRecyclerItemText$i")
-        }
-        val adapter = CustomAdapter(dataSet, applicationContext)
-        recyclerView.adapter = adapter
+    override fun onResume() {
+        Log.d("Main", "onResume")
+        super.onResume()
+        loadRecycler()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -61,6 +56,26 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+
+    fun loadRecycler() {
+        // Create a RecyclerView, a LayoutManager, a data Adapter and wire everything up.
+        val recyclerView = findViewById<View>(R.id.main_recycler) as RecyclerView
+        val layoutManager = LinearLayoutManager(applicationContext)
+        recyclerView.layoutManager = layoutManager
+        val dataSet: MutableList<String> = ArrayList(DATASET_COUNT)
+
+        val negativeCount = PreferenceManager
+            .getDefaultSharedPreferences(this)
+            .getBoolean("settings_negative_items", false)
+
+        val mainRecyclerItemText = getString(R.string.item_element_text) + if (negativeCount) " -" else ""
+
+        for (i in 0 until DATASET_COUNT) {
+            dataSet.add("$mainRecyclerItemText$i")
+        }
+        val adapter = CustomAdapter(dataSet, applicationContext)
+        recyclerView.adapter = adapter
+    }
 
     companion object {
         private const val DATASET_COUNT = 50

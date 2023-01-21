@@ -1,18 +1,15 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
   <PreferenceCategory app:title="@string/settings">
 
     <SwitchPreferenceCompat
-        app:key="sync"
+        app:key="settings_negative_items"
         app:title="@string/settings_toggle_negative_items" />
 
     <SwitchPreferenceCompat
-        app:dependency="sync"
-        app:key="attachment"
+        app:key="settings_middle_row"
         app:summaryOff="@string/settings_toggle_middle_off"
         app:summaryOn="@string/settings_toggle_middle_on"
         app:title="@string/settings_toggle_middle_title" />
 
   </PreferenceCategory>
-
 </PreferenceScreen>
