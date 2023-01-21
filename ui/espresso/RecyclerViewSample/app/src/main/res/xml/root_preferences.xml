@@ -2,11 +2,11 @@
   <PreferenceCategory app:title="@string/settings">
 
     <SwitchPreferenceCompat
-        app:key="settings_negative_items"
+        app:key="@string/settings_key_negative_items"
         app:title="@string/settings_toggle_negative_items" />
 
     <SwitchPreferenceCompat
-        app:key="settings_middle_row"
+        app:key="@string/settings_key_middle_row"
         app:summaryOff="@string/settings_toggle_middle_off"
         app:summaryOn="@string/settings_toggle_middle_on"
         app:title="@string/settings_toggle_middle_title" />

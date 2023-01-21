@@ -22,4 +22,8 @@
   <string name="settings_toggle_middle_on">Displays a different string for the center row</string>
   <string name="settings_toggle_middle_off">Displays the recycler view dataset normally</string>
   <string name="settings_toggle_middle_title">Toggle middle row text</string>
+
+  <!-- Preference Keys -->
+  <string name="settings_key_negative_items">settings_negative_items</string>
+  <string name="settings_key_middle_row">settings_middle_row</string>
 </resources>

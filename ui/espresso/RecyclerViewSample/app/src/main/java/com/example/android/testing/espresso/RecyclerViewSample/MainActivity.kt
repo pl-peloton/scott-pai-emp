@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
         val negativeCount = PreferenceManager
             .getDefaultSharedPreferences(this)
-            .getBoolean("settings_negative_items", false)
+            .getBoolean(getString(R.string.settings_key_negative_items), false)
 
         for (i in 0 until DATASET_COUNT) {
             val itemString = if (negativeCount) {

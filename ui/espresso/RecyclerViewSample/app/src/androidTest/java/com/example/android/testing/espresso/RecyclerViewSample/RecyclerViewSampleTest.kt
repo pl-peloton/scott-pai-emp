@@ -16,6 +16,8 @@
 package com.example.android.testing.espresso.RecyclerViewSample
 
 import android.content.Context
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
@@ -30,6 +32,7 @@ import androidx.test.filters.LargeTest
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,12 +43,25 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class RecyclerViewSampleTest {
+
+    private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+
     /**
      * Use [ActivityScenario] to create and launch the activity under test. This is a
      * replacement for [androidx.test.rule.ActivityTestRule].
      */
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @Before
+    fun setup() {
+        sharedPrefs.edit {
+            clear()
+            putBoolean(context.resources.getString(R.string.settings_key_middle_row), true)
+            commit()
+        }
+    }
 
     @Test(expected = PerformException::class)
     fun itemWithText_doesNotExist() {
@@ -70,9 +86,14 @@ class RecyclerViewSampleTest {
             )
 
         // Match the text in an item below the fold and check that it's displayed.
-        val itemElementText = ApplicationProvider.getApplicationContext<Context>().resources.getString(
-            R.string.item_element_text
-        ) + ITEM_BELOW_THE_FOLD.toString()
+        val itemElementText = context
+            .resources
+            .getQuantityString(
+                R.plurals.item_element_text,
+                ITEM_BELOW_THE_FOLD,
+                ITEM_BELOW_THE_FOLD
+            )
+
         Espresso.onView(ViewMatchers.withText(itemElementText))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }

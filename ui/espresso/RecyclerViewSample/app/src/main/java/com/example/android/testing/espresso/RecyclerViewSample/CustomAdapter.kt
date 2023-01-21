@@ -59,7 +59,7 @@ class CustomAdapter(private val mDataSet: List<String>, private val mContext: Co
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val subMiddleRow = PreferenceManager
             .getDefaultSharedPreferences(mContext)
-            .getBoolean("settings_middle_row", false)
+            .getBoolean(mContext.resources.getString(R.string.settings_key_middle_row), false)
 
         viewHolder.isInTheMiddle = position == mDataSet.size / 2
 
