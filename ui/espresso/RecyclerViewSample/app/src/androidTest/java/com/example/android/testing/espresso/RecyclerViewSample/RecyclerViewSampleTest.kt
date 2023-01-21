@@ -50,7 +50,7 @@ class RecyclerViewSampleTest {
     @Test(expected = PerformException::class)
     fun itemWithText_doesNotExist() {
         // Attempt to scroll to an item that contains the special text.
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView)) // scrollTo will fail the test if no item matches.
+        Espresso.onView(ViewMatchers.withId(R.id.main_recycler)) // scrollTo will fail the test if no item matches.
             .perform(
                 RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(
                     ViewMatchers.hasDescendant(ViewMatchers.withText("not in the list"))
@@ -61,7 +61,7 @@ class RecyclerViewSampleTest {
     @Test
     fun scrollToItemBelowFold_checkItsText() {
         // First scroll to the position that needs to be matched and click on it.
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+        Espresso.onView(ViewMatchers.withId(R.id.main_recycler))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     ITEM_BELOW_THE_FOLD,
@@ -80,7 +80,7 @@ class RecyclerViewSampleTest {
     @Test
     fun itemInMiddleOfList_hasSpecialText() {
         // First, scroll to the view holder using the isInTheMiddle matcher.
-        Espresso.onView(ViewMatchers.withId(R.id.recyclerView))
+        Espresso.onView(ViewMatchers.withId(R.id.main_recycler))
             .perform(
                 RecyclerViewActions.scrollToHolder(
                     isInTheMiddle

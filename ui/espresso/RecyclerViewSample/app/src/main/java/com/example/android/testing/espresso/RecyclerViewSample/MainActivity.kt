@@ -15,7 +15,6 @@
  */
 package com.example.android.testing.espresso.RecyclerViewSample
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Create a RecyclerView, a LayoutManager, a data Adapter and wire everything up.
-        val recyclerView = findViewById<View>(R.id.recyclerView) as RecyclerView
+        val recyclerView = findViewById<View>(R.id.main_recycler) as RecyclerView
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
         val dataSet: MutableList<String> = ArrayList(DATASET_COUNT)
