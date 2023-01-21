@@ -27,6 +27,9 @@ import androidx.recyclerview.widget.RecyclerView
  * Shows a list using a RecyclerView.
  */
 class MainActivity : AppCompatActivity() {
+
+    lateinit var mainRecyclerItemText: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,8 +39,9 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
         val dataSet: MutableList<String> = ArrayList(DATASET_COUNT)
+        mainRecyclerItemText = getString(R.string.item_element_text)
         for (i in 0 until DATASET_COUNT) {
-            dataSet.add(getString(R.string.item_element_text) + i)
+            dataSet.add("$mainRecyclerItemText$i")
         }
         val adapter = CustomAdapter(dataSet, applicationContext)
         recyclerView.adapter = adapter
@@ -51,12 +55,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.action_settings -> {
-
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-
 
     companion object {
         private const val DATASET_COUNT = 50
