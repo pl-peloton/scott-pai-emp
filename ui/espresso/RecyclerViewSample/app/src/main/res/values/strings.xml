@@ -15,8 +15,6 @@
   -->
 <resources>
   <string name="app_name">Basic RecyclerView sample</string>
-  <string name="element_text">Element</string>
-  <string name="item_element_text">This is element </string>
   <string name="middle">This is the middle!</string>
 
   <string name="settings">Settings</string>

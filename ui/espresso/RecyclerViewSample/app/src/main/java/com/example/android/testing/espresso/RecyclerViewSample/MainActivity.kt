@@ -68,11 +68,15 @@ class MainActivity : AppCompatActivity() {
             .getDefaultSharedPreferences(this)
             .getBoolean("settings_negative_items", false)
 
-        val mainRecyclerItemText = getString(R.string.item_element_text) + if (negativeCount) " -" else " "
-
         for (i in 0 until DATASET_COUNT) {
-            dataSet.add("$mainRecyclerItemText$i")
+            val itemString = if (negativeCount) {
+                resources.getQuantityString(R.plurals.neg_item_element_text, i, i)
+            } else {
+                resources.getQuantityString(R.plurals.item_element_text, i, i)
+            }
+            dataSet.add(itemString)
         }
+
         val adapter = CustomAdapter(dataSet, applicationContext)
         recyclerView.adapter = adapter
     }

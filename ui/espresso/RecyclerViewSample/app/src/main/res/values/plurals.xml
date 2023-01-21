@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <plurals name="item_element_text">
+    <item quantity="one">You have %d apple</item>
+    <item quantity="other">You have %d apples</item>
+  </plurals>
+  <plurals name="neg_item_element_text">
+    <item quantity="one">You have -%d apple</item>
+    <item quantity="other">You have -%d apples</item>
+  </plurals>
+</resources>
