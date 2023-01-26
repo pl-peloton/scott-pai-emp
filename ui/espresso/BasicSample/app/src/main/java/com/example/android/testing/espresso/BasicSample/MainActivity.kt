@@ -18,8 +18,11 @@ package com.example.android.testing.espresso.BasicSample
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.ToggleButton
 
 /**
  * An [Activity] that gets a text string from the user and displays it back when the user
@@ -32,6 +35,9 @@ class MainActivity : Activity(), View.OnClickListener {
 
     // The EditText where the user types the message.
     private var mEditText: EditText? = null
+
+    private lateinit var toggleButton: ToggleButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -39,8 +45,12 @@ class MainActivity : Activity(), View.OnClickListener {
         // Set the listeners for the buttons.
         findViewById<View>(R.id.changeTextBt).setOnClickListener(this)
         findViewById<View>(R.id.activityChangeTextBtn).setOnClickListener(this)
-        mTextView = findViewById<View>(R.id.textToBeChanged) as TextView
-        mEditText = findViewById<View>(R.id.editTextUserInput) as EditText
+        mTextView = findViewById(R.id.textToBeChanged)
+        mEditText = findViewById(R.id.editTextUserInput)
+        toggleButton = findViewById(R.id.toggleButton)
+        toggleButton.setOnClickListener {
+            updateVisibility()
+        }
     }
 
     override fun onClick(view: View) {
@@ -56,6 +66,14 @@ class MainActivity : Activity(), View.OnClickListener {
             val intent = ShowTextActivity
                 .newStartIntent(this, text)
             startActivity(intent)
+        }
+    }
+
+    private fun updateVisibility() {
+        mTextView?.visibility = if (findViewById<ToggleButton>(R.id.toggleButton).isChecked) {
+            VISIBLE
+        } else {
+            INVISIBLE
         }
     }
 }
