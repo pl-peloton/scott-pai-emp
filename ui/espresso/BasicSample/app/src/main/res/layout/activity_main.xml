@@ -57,4 +57,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/open_activity_and_change_text"/>
+
+    <ToggleButton
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOn="@string/show_text"
+            android:textOff="@string/text_hidden"
+            android:layout_gravity="center_horizontal"
+            android:checked="true"/>
 </LinearLayout>
