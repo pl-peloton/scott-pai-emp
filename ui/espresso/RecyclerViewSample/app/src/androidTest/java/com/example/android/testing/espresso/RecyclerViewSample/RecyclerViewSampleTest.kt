@@ -21,11 +21,16 @@ import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -63,13 +68,25 @@ class RecyclerViewSampleTest {
         }
     }
 
+    @Test
+    fun clickOn35thElement() {
+        // example showing generic actionOnItem()
+        onView(withId(R.id.main_recycler))
+            .perform(
+                RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+                    hasDescendant(withText("You have 35 apples")),
+                    click()
+                )
+            )
+    }
+
     @Test(expected = PerformException::class)
     fun itemWithText_doesNotExist() {
         // Attempt to scroll to an item that contains the special text.
-        Espresso.onView(ViewMatchers.withId(R.id.main_recycler)) // scrollTo will fail the test if no item matches.
+        onView(withId(R.id.main_recycler)) // scrollTo will fail the test if no item matches.
             .perform(
                 RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(
-                    ViewMatchers.hasDescendant(ViewMatchers.withText("not in the list"))
+                    hasDescendant(withText("not in the list"))
                 )
             )
     }
@@ -77,11 +94,11 @@ class RecyclerViewSampleTest {
     @Test
     fun scrollToItemBelowFold_checkItsText() {
         // First scroll to the position that needs to be matched and click on it.
-        Espresso.onView(ViewMatchers.withId(R.id.main_recycler))
+        onView(withId(R.id.main_recycler))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
                     ITEM_BELOW_THE_FOLD,
-                    ViewActions.click()
+                    click()
                 )
             )
 
@@ -94,14 +111,14 @@ class RecyclerViewSampleTest {
                 ITEM_BELOW_THE_FOLD
             )
 
-        Espresso.onView(ViewMatchers.withText(itemElementText))
+        onView(withText(itemElementText))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
     fun itemInMiddleOfList_hasSpecialText() {
         // First, scroll to the view holder using the isInTheMiddle matcher.
-        Espresso.onView(ViewMatchers.withId(R.id.main_recycler))
+        onView(withId(R.id.main_recycler))
             .perform(
                 RecyclerViewActions.scrollToHolder(
                     isInTheMiddle
@@ -111,7 +128,7 @@ class RecyclerViewSampleTest {
         // Check that the item has the special text.
         val middleElementText =
             ApplicationProvider.getApplicationContext<Context>().resources.getString(R.string.middle)
-        Espresso.onView(ViewMatchers.withText(middleElementText))
+        onView(withText(middleElementText))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
