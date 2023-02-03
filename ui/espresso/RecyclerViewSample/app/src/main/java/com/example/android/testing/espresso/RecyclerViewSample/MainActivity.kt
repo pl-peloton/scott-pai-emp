@@ -25,11 +25,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.random.Random
 
 /**
  * Shows a list using a RecyclerView.
  */
 class MainActivity : AppCompatActivity() {
+
+    private val datasetCount = Random.nextInt(40, 60)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +65,13 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<View>(R.id.main_recycler) as RecyclerView
         val layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.layoutManager = layoutManager
-        val dataSet: MutableList<String> = ArrayList(DATASET_COUNT)
+        val dataSet: MutableList<String> = ArrayList(datasetCount)
 
         val negativeCount = PreferenceManager
             .getDefaultSharedPreferences(this)
             .getBoolean(getString(R.string.settings_key_negative_items), false)
 
-        for (i in 0 until DATASET_COUNT) {
+        for (i in 0 until datasetCount) {
             val itemString = if (negativeCount) {
                 resources.getQuantityString(R.plurals.neg_item_element_text, i, i)
             } else {
@@ -79,9 +82,5 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = CustomAdapter(dataSet, applicationContext)
         recyclerView.adapter = adapter
-    }
-
-    companion object {
-        private const val DATASET_COUNT = 50
     }
 }
