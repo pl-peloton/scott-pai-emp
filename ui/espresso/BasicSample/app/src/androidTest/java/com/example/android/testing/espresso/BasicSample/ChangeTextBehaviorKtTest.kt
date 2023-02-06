@@ -64,6 +64,16 @@ class ChangeTextBehaviorKtTest {
     }
 
     @Test
+    fun changeText_sameActivityPOM() {
+        mainExample {
+            val textInput = "Pai my guy"
+            typeTextIntoEditTextField(textInput)
+            clickChangeTextButton()
+            verifyTextHeaderString(textInput)
+        }
+    }
+
+    @Test
     fun changeText_newActivity() {
         // Type text and then press the button.
         onView(withId(R.id.editTextUserInput)).perform(
@@ -74,6 +84,15 @@ class ChangeTextBehaviorKtTest {
 
         // This view is in a different Activity, no need to tell Espresso.
         onView(withId(R.id.show_text_view)).check(matches(withText(STRING_TO_BE_TYPED)))
+    }
+
+    @Test
+    fun changeText_newActivityPOM() {
+        mainExample {
+            val userString = "This is a new activity"
+            typeTextIntoEditTextField(userString)
+            clickOpenActivityButtonAndVerifyText(userString)
+        }
     }
 
     companion object {
