@@ -64,6 +64,17 @@ class ChangeTextBehaviorKtTest {
     }
 
     @Test
+    fun changeText_sameActivityPOM() {
+//        mainExample { typeTextIntoEditTextField("Pai my guy") }
+        val mainExample = MainExample()
+        val textInput = "Pai my guy"
+        mainExample.typeTextIntoEditTextField(textInput)
+        mainExample.clickChangeTextButton()
+        mainExample.verifyTextHeaderString(textInput)
+
+    }
+
+    @Test
     fun changeText_newActivity() {
         // Type text and then press the button.
         onView(withId(R.id.editTextUserInput)).perform(
