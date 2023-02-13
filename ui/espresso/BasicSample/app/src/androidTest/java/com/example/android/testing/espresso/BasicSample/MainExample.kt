@@ -8,14 +8,15 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import org.hamcrest.CoreMatchers.allOf
 
-fun mainExample(func: () -> Any) = MainExample().apply { func() }
-
+//fun mainExample(func: () -> Any) = MainExample().apply { func() }
+fun mainExample(func: MainExample.() -> Any) = MainExample().apply { func() }
 class MainExample {
     val textHeader = onView(withId(R.id.textToBeChanged))
     val textEditField = onView(withId(R.id.editTextUserInput))
     val changeTextButton = onView(withText(R.string.change_text))
     val openActivityButton = onView(withId(R.id.activityChangeTextBtn))
     val textShownButton = onView(allOf(withId(R.id.toggleButton)))
+    val newActivityText = onView(withId(R.id.show_text_view))
 
     fun typeTextIntoEditTextField(stringToInput: String) {
         textEditField.perform(click()).perform(typeText(stringToInput))
@@ -24,7 +25,10 @@ class MainExample {
     fun clickChangeTextButton() {
         changeTextButton.perform(click())
     }
-
+    fun clickOpenActivityButtonAndVerifyText(expectedString: String) {
+        openActivityButton.perform(click())
+        newActivityText.check(matches(withText(expectedString)))
+    }
     fun verifyTextHeaderString(expectedString: String) {
         textHeader.check(matches(withText(expectedString)))
     }
