@@ -36,6 +36,7 @@ import com.example.android.testing.espresso.RecyclerViewSample.CustomAdapter
 import com.example.android.testing.espresso.RecyclerViewSample.MainActivity
 import com.example.android.testing.espresso.RecyclerViewSample.R
 import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen
+import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen.Companion.mainScreen
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -133,6 +134,7 @@ class RecyclerViewSampleTest {
         onView(withText(middleElementText))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
+
     @Test
     fun itemInMiddleOfList_hasSpecialTextPOM() {
         val mainScreen = MainScreen()

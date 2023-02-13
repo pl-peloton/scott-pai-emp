@@ -9,6 +9,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.android.testing.espresso.RecyclerViewSample.MainActivity
 import com.example.android.testing.espresso.RecyclerViewSample.R
+import com.example.android.testing.espresso.RecyclerViewSample.robots.ActionBar.Companion.actionBar
+import com.example.android.testing.espresso.RecyclerViewSample.robots.SettingsScreen.Companion.settingsScreen
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -46,6 +48,12 @@ class ToggleTest {
         8. Go back to main menu
         9. Verify elements now display normally
          */
+        actionBar {
+            openSettingsScreen()
+        }
+        settingsScreen {
+            TODO("implement")
+        }
     }
 
     @Test
