@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.testing.espresso.RecyclerViewSample
+package com.example.android.testing.espresso.RecyclerViewSample.tests
 
 import android.content.Context
 import androidx.core.content.edit
@@ -32,6 +32,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.example.android.testing.espresso.RecyclerViewSample.CustomAdapter
+import com.example.android.testing.espresso.RecyclerViewSample.MainActivity
+import com.example.android.testing.espresso.RecyclerViewSample.R
+import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
@@ -128,6 +132,14 @@ class RecyclerViewSampleTest {
             ApplicationProvider.getApplicationContext<Context>().resources.getString(R.string.middle)
         onView(withText(middleElementText))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+    }
+    @Test
+    fun itemInMiddleOfList_hasSpecialTextPOM() {
+        val mainScreen = MainScreen()
+//        mainScreen.apply{
+//            scrollTo(middleElementText)
+//        }
+        mainScreen.scrollTo(mainScreen.middleElementText)
     }
 
     companion object {

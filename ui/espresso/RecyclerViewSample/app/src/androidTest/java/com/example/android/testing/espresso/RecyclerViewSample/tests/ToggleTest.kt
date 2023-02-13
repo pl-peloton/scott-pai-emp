@@ -1,4 +1,4 @@
-package com.example.android.testing.espresso.RecyclerViewSample
+package com.example.android.testing.espresso.RecyclerViewSample.tests
 
 import android.content.Context
 import androidx.core.content.edit
@@ -7,6 +7,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import com.example.android.testing.espresso.RecyclerViewSample.MainActivity
+import com.example.android.testing.espresso.RecyclerViewSample.R
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -53,6 +55,7 @@ class ToggleTest {
         2. Open settings menu
         3. Turn "Toggle middle row text" on
         4. Verify subtext is "Displays a different string for the center row"
+
         5. Turn toggle off
         6. Verify subtext is "Displays the recycler view dataset normally"
          */
