@@ -13,6 +13,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.contrib.RecyclerViewActions.scrollToHolder
 import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -151,6 +152,30 @@ fun ViewInteraction.clickOnHolderChild(holderMatcher: Matcher<View>, childResour
             }
         )
     )
+}
+
+/**
+ * get View from ViewInteraction
+ *
+ * this is an extension function
+ */
+fun ViewInteraction.getView(): View {
+    var viewToReturn: View? = null
+    this.perform(
+        object : ViewAction {
+            override fun getConstraints(): Matcher<View> {
+                return ViewMatchers.isAssignableFrom(View::class.java)
+            }
+
+            override fun getDescription(): String {
+                return "Get View from ViewInteraction"
+            }
+
+            override fun perform(uiController: UiController, view: View) {
+                viewToReturn = view
+            }
+        })
+    return viewToReturn!!
 }
 
 /**
