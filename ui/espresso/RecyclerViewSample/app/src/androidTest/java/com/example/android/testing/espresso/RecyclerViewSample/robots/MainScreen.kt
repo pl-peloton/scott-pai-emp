@@ -55,7 +55,7 @@ class MainScreen {
 
     fun verifyTextInEachRowInRecycler() {
         val rowCount = getSizeOfARecyclerView()
-//        val middleRowIndex = (rowCount / 2)
+        val middleRowIndex = (rowCount / 2)
         val middleElementText = ApplicationProvider.getApplicationContext<Context>().resources.getString(R.string.middle)
         println("The recycler view was found to have $rowCount rows.")
         var index = 0
@@ -63,19 +63,15 @@ class MainScreen {
             if (index == 1) {
                 var expectedString = "You have -$index apple"
                 verifyRowTextAt(index, expectedString)
+            } else if (index == middleRowIndex) {
+                verifyRowTextAt(index, middleElementText)
             } else {
-                try {
                 var expectedString = "You have -$index apples"
                 verifyRowTextAt(index, expectedString)
-            } catch (e: AssertionError) {
-                verifyRowTextAt(index, middleElementText)
-            }
             }
             index += 1
         }
 
-//        while index <= rowCount
-//        verifyRowTextAt
 
     }
 

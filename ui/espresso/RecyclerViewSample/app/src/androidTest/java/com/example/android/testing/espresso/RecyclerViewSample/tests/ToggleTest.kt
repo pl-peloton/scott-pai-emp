@@ -57,6 +57,10 @@ class ToggleTest {
             verifyTextInEachRowInRecycler()
         }
 //        6. Go back to settings menu
+        settingsScreen {
+            tapOnNegativeItemToggle()
+        }
+        Espresso.pressBack()
 //        7. Turn toggle off
 //        8. Go back to main menu
 //        9. Verify elements now display normally
