@@ -11,6 +11,8 @@ import androidx.test.filters.LargeTest
 import com.example.android.testing.espresso.RecyclerViewSample.MainActivity
 import com.example.android.testing.espresso.RecyclerViewSample.R
 import com.example.android.testing.espresso.RecyclerViewSample.robots.ActionBar.Companion.actionBar
+import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen
+import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen.Companion.mainScreen
 import com.example.android.testing.espresso.RecyclerViewSample.robots.SettingsScreen.Companion.settingsScreen
 import org.junit.Before
 import org.junit.Rule
@@ -51,6 +53,9 @@ class ToggleTest {
         Espresso.pressBack()
 //        5. Verify elements now show "You have -{n} apples
 
+        mainScreen {
+            verifyTextInEachRowInRecycler()
+        }
 //        6. Go back to settings menu
 //        7. Turn toggle off
 //        8. Go back to main menu

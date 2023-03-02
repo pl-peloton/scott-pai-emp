@@ -6,12 +6,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers.*
 import com.example.android.testing.espresso.RecyclerViewSample.R
 import com.example.android.testing.espresso.RecyclerViewSample.assertions.withRecyclerSize
 import com.example.android.testing.espresso.RecyclerViewSample.getView
+import com.example.android.testing.espresso.RecyclerViewSample.itemAtPosition
 import com.example.android.testing.espresso.RecyclerViewSample.scrollTo
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matcher
@@ -37,8 +37,9 @@ class MainScreen {
     }
 
     fun verifyRowTextAt(index: Int, expectedString: String) {
-        mainRecycler.scrollTo(index)
-        mainRecycler.check(matches(withText(expectedString)))
+        mainRecycler.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(index))
+        mainRecycler.itemAtPosition(index, hasDescendant(withText(expectedString)))
+//        mainRecycler.check(matches(withText(expectedString)))
     }
 
     fun verifyMainRecyclerElementsEqualTo(size: Int) {
@@ -54,6 +55,25 @@ class MainScreen {
 
     fun verifyTextInEachRowInRecycler() {
         val rowCount = getSizeOfARecyclerView()
+//        val middleRowIndex = (rowCount / 2)
+        val middleElementText = ApplicationProvider.getApplicationContext<Context>().resources.getString(R.string.middle)
+        println("The recycler view was found to have $rowCount rows.")
+        var index = 0
+        while (rowCount > index) {
+            if (index == 1) {
+                var expectedString = "You have -$index apple"
+                verifyRowTextAt(index, expectedString)
+            } else {
+                try {
+                var expectedString = "You have -$index apples"
+                verifyRowTextAt(index, expectedString)
+            } catch (e: AssertionError) {
+                verifyRowTextAt(index, middleElementText)
+            }
+            }
+            index += 1
+        }
+
 //        while index <= rowCount
 //        verifyRowTextAt
 
