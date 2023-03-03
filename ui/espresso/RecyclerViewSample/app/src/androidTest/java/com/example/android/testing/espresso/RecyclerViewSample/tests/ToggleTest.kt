@@ -54,16 +54,22 @@ class ToggleTest {
 //        5. Verify elements now show "You have -{n} apples
 
         mainScreen {
-            verifyTextInEachRowInRecycler()
+            verifyTextInEachRowInRecycler("You have -X apples")
         }
 //        6. Go back to settings menu
+        actionBar {
+            openSettingsScreen()
+        }
+//        7. Turn toggle off
         settingsScreen {
             tapOnNegativeItemToggle()
         }
-        Espresso.pressBack()
-//        7. Turn toggle off
 //        8. Go back to main menu
+        Espresso.pressBack()
 //        9. Verify elements now display normally
+        mainScreen {
+            verifyTextInEachRowInRecycler("You have X apples")
+        }
     }
 
     @Test

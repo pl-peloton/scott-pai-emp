@@ -53,7 +53,9 @@ class MainScreen {
     fun getSizeOfARecyclerView(recyclerView: ViewInteraction = mainRecycler) =
         (recyclerView.getView() as RecyclerView).adapter!!.itemCount
 
-    fun verifyTextInEachRowInRecycler() {
+    fun verifyTextInEachRowInRecycler(defaultPluralString: String) {
+//        String provided needs X in place of number
+        val singularString: String = defaultPluralString.replace("s","")
         val rowCount = getSizeOfARecyclerView()
         val middleRowIndex = (rowCount / 2)
         val middleElementText = ApplicationProvider.getApplicationContext<Context>().resources.getString(R.string.middle)
@@ -61,18 +63,17 @@ class MainScreen {
         var index = 0
         while (rowCount > index) {
             if (index == 1) {
-                var expectedString = "You have -$index apple"
+//                var
+                var expectedString = singularString.replace("X", "$index")
                 verifyRowTextAt(index, expectedString)
             } else if (index == middleRowIndex) {
                 verifyRowTextAt(index, middleElementText)
             } else {
-                var expectedString = "You have -$index apples"
+                var expectedString = defaultPluralString.replace("X", "$index")
                 verifyRowTextAt(index, expectedString)
             }
             index += 1
         }
-
-
     }
 
     private fun verifyNumberOfMainRecyclerElements(matcher: Matcher<Int>) {
