@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.example.android.testing.espresso.RecyclerViewSample.MainActivity
 import com.example.android.testing.espresso.RecyclerViewSample.R
 import com.example.android.testing.espresso.RecyclerViewSample.robots.ActionBar.Companion.actionBar
+import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen
+import com.example.android.testing.espresso.RecyclerViewSample.robots.MainScreen.Companion.mainScreen
 import com.example.android.testing.espresso.RecyclerViewSample.robots.SettingsScreen.Companion.settingsScreen
 import org.junit.Before
 import org.junit.Rule
@@ -37,22 +40,35 @@ class ToggleTest {
 
     @Test
     fun shouldShowNegativeNumbersWhenEnabled() {
-        /*
-        1. Start app
-        2. Open settings menu
-        3. Turn "Use negative item count" on
-        4. Go back to main menu
-        5. Verify elements now show "You have -{n} apples
-        6. Go back to settings menu
-        7. Turn toggle off
-        8. Go back to main menu
-        9. Verify elements now display normally
-         */
+//        1. Start app
+//        2. Open settings menu
         actionBar {
             openSettingsScreen()
         }
+//        3. Turn "Use negative item count" on
         settingsScreen {
-            TODO("implement")
+            tapOnNegativeItemToggle()
+        }
+//        4. Go back to main menu
+        Espresso.pressBack()
+//        5. Verify elements now show "You have -{n} apples
+
+        mainScreen {
+            verifyTextInEachRowInRecycler("You have -X apples")
+        }
+//        6. Go back to settings menu
+        actionBar {
+            openSettingsScreen()
+        }
+//        7. Turn toggle off
+        settingsScreen {
+            tapOnNegativeItemToggle()
+        }
+//        8. Go back to main menu
+        Espresso.pressBack()
+//        9. Verify elements now display normally
+        mainScreen {
+            verifyTextInEachRowInRecycler("You have X apples")
         }
     }
 
@@ -72,6 +88,8 @@ class ToggleTest {
     @Test
     fun shouldDisplayDifferentCenterText() {
         /*
+        Pai says no indices
+
         1. Start app
         2. Open settings menu
         3. Turn "Toggle middle row text" on
