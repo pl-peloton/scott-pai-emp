@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -58,7 +59,6 @@ class MainScreen {
         val singularString: String = defaultPluralString.replace("s","")
         val rowCount = getSizeOfARecyclerView()
         val middleRowIndex = (rowCount / 2)
-        val middleElementText = ApplicationProvider.getApplicationContext<Context>().resources.getString(R.string.middle)
         println("The recycler view was found to have $rowCount rows.")
         var index = 0
         while (rowCount > index) {
@@ -74,6 +74,22 @@ class MainScreen {
             }
             index += 1
         }
+    }
+
+    fun verifyMiddleRowText(textIsShowing: Boolean) {
+        val rowCount = getSizeOfARecyclerView()
+        val middleRowIndex = (rowCount / 2)
+
+        if (textIsShowing) {
+            mainRecycler.perform(
+                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(middleRowIndex)
+            ).check(matches(hasDescendant(withText(middleElementText))))
+        } else if (textIsShowing == false) {
+            mainRecycler.perform(
+                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(middleRowIndex)
+            ).check(matches(hasDescendant(withText("You have $middleRowIndex apples"))))
+        }
+
     }
 
     private fun verifyNumberOfMainRecyclerElements(matcher: Matcher<Int>) {
