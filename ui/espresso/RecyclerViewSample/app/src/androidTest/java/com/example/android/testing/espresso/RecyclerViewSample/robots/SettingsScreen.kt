@@ -44,7 +44,7 @@ class SettingsScreen {
     private val middleRowToggle: ViewInteraction = onView(allOf(
         withId(R.id.switchWidget),
         withParent(
-            hasSibling(withText(R.string.settings_toggle_middle_title))
+            hasSibling(hasDescendant(withText(R.string.settings_toggle_middle_title)))
         )
     ))
 
@@ -54,8 +54,18 @@ class SettingsScreen {
     }
 
     fun tapMiddleRowToggle() {
-        middleRowLabel.check(matches(isDisplayed()))
+//        middleRowLabel.check(matches(isDisplayed()))
         middleRowToggle.perform(click())
+    }
+    fun verifyMiddleToggleLabelText(toggleEnabled: Boolean) {
+        if (toggleEnabled == true) {
+            middleRowLabel.check(matches(hasSibling(withText(R.string.settings_toggle_middle_on))))
+//            mainRecycler.scrollTo(withText(R.string.settings_toggle_middle_title)).check(matches(
+//                hasDescendant(withText(R.string.settings_toggle_middle_on))
+//            ))
+        } else if (toggleEnabled == false) {
+            middleRowLabel.check(matches(hasSibling(withText(R.string.settings_toggle_middle_off))))
+        }
     }
 
     init {

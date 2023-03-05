@@ -5,6 +5,8 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
@@ -83,13 +85,20 @@ class ToggleTest {
         5. Turn toggle off
         6. Verify subtext is "Displays the recycler view dataset normally"
          */
+        actionBar {
+            openSettingsScreen()
+        }
+        settingsScreen {
+            verifyMiddleToggleLabelText(true)
+            tapMiddleRowToggle()
+            verifyMiddleToggleLabelText(false)
+        }
     }
 
     @Test
     fun shouldDisplayDifferentCenterText() {
         /*
         Pai says no indices
-
         1. Start app
         2. Open settings menu
         3. Turn "Toggle middle row text" on
@@ -100,5 +109,25 @@ class ToggleTest {
         8. Go back to main menu
         9. Verify center element says "You have {n} apples"
          */
+        actionBar {
+            openSettingsScreen()
+        }
+//        Middle toggle is on by default so not adding step to toggle
+        settingsScreen {
+            verifyMiddleToggleLabelText(true)
+        }
+        Espresso.pressBack()
+        mainScreen {
+            verifyMiddleRowText(true)
+        }
+        actionBar { openSettingsScreen() }
+        settingsScreen {
+            tapMiddleRowToggle()
+            verifyMiddleToggleLabelText(false)
+            Espresso.pressBack()
+        }
+        mainScreen {
+            verifyMiddleRowText(false)
+        }
     }
 }
