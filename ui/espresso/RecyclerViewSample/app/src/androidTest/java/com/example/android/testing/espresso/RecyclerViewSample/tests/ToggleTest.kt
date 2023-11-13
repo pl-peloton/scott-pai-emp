@@ -23,6 +23,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
+
 class ToggleTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
