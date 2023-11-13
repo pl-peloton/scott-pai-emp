@@ -37,6 +37,9 @@ class MainScreen {
         mainRecycler.scrollTo(withText(stringToSearch))
     }
 
+    /**
+     * Checks the string of a specific row
+     */
     fun verifyRowTextAt(index: Int, expectedString: String) {
         mainRecycler.perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(index))
         mainRecycler.itemAtPosition(index, hasDescendant(withText(expectedString)))
