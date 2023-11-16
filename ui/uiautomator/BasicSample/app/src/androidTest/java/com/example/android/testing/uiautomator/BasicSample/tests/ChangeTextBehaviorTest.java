@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.testing.uiautomator.BasicSample;
+package com.example.android.testing.uiautomator.BasicSample.tests;
 
 import org.junit.Before;
 import org.junit.Test;

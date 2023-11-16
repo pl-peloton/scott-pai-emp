@@ -1,4 +1,4 @@
-package com.example.android.testing.uiautomator.BasicSample
+package com.example.android.testing.uiautomator.BasicSample.tests
 
 import android.content.Context
 import android.content.Intent
@@ -50,13 +50,13 @@ class UIAutomatorDemo {
     @Before
     open fun startMainActivityFromHomeScreen() {
         // Initialize UiDevice instance
-        val mDevice = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation())
+        val device = UiDevice.getInstance(androidx.test.platform.app.InstrumentationRegistry.getInstrumentation())
         // Start from the home screen
-        mDevice.pressHome()
+        device.pressHome()
         // Wait for launcher
         val launcherPackage: String? = getLauncherPackageName()
         Assert.assertThat(launcherPackage, CoreMatchers.notNullValue())
-        mDevice.wait<Boolean>(
+        device.wait<Boolean>(
             Until.hasObject(By.pkg(launcherPackage).depth(0)),
             this.LAUNCH_TIMEOUT.toLong()
         )
@@ -67,7 +67,7 @@ class UIAutomatorDemo {
         intent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) // Clear out any previous instances
         context.startActivity(intent)
         // Wait for the app to appear
-        mDevice.wait<Boolean>(
+        device.wait<Boolean>(
             Until.hasObject(
                 By.pkg(this.BASIC_SAMPLE_PACKAGE).depth(0)
             ), this.LAUNCH_TIMEOUT.toLong()
@@ -78,11 +78,11 @@ class UIAutomatorDemo {
     fun changeTextBehavior() {
 //        get the currently running device
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        val textToBeChanged = device.findObject(By.text("Hello UiAutomator!"))
+        val textToBeChanged = device.findObject(By.res(this.BASIC_SAMPLE_PACKAGE, "textToBeChanged"))
         val userInput = device.findObject(By.res(this.BASIC_SAMPLE_PACKAGE, "editTextUserInput"))
         val changeTextButton = device.findObject(By.res(this.BASIC_SAMPLE_PACKAGE, "changeTextBt"))
         userInput.setText("Scott wuz here")
         changeTextButton.click()
-        Assert.assertTrue(device.wait(Until.hasObject(By.text("Scott wuz here")), 5000))
+        textToBeChanged.hasObject(By.text("Scott wuz here"))
     }
 }
